@@ -1,6 +1,10 @@
 node {
-   checkout scm 
+   def commit = checkout(scm).GIT_COMMIT
+
    stage('Git tag') {
+        echo "GIT_COMMIT = ${env.GIT_COMMIT}"
+        echo "commit = $commit"
+        sh "git show -s --format='%ae' HEAD"
         sshagent(['ad928936-41d1-4395-a9db-4d6aa46d35ed']) {
             sh "curl -O https://gist.githubusercontent.com/m14t/3056747/raw/2e0d5df6d141400640c8f768e5c3603533812cf6/fix_github_https_repo.sh"
             sh "chmod +x fix_github_https_repo.sh"
